@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Financial Calculator Suite</title>
+    <title>CalculeJa</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
@@ -21,17 +21,18 @@
     <div class="container">
         <header>
             <div class="header-top">
-                <h1>FinCalc <span class="highlight">Pro</span></h1>
+                <h1>Calcule<span class="highlight">Ja</span></h1>
                 <div class="language-selector">
-                    <select id="language-select">
-                        <option value="en">🇺🇸 English</option>
-                        <option value="pt">🇧🇷 Português</option>
-                        <option value="es">🇪🇸 Español</option>
-                        <option value="fr">🇫🇷 Français</option>
-                        <option value="de">🇩🇪 Deutsch</option>
-                        <option value="zh">🇨🇳 中文</option>
-                        <option value="ar">🇸🇦 العربية</option>
-                    </select>
+                    <button id="language-btn" class="language-btn">🇺🇸</button>
+                    <ul id="language-dropdown" class="language-dropdown">
+                        <li data-value="en">🇺🇸 English</li>
+                        <li data-value="pt">🇧🇷 Português</li>
+                        <li data-value="es">🇪🇸 Español</li>
+                        <li data-value="fr">🇫🇷 Français</li>
+                        <li data-value="de">🇩🇪 Deutsch</li>
+                        <li data-value="zh">🇨🇳 中文</li>
+                        <li data-value="ar">🇸🇦 العربية</li>
+                    </ul>
                 </div>
             </div>
             <p data-i18n="subtitle">Your personal financial assistant</p>

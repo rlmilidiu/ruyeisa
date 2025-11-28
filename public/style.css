@@ -126,24 +126,62 @@ header h1 {
     right: 0;
     top: 50%;
     transform: translateY(-50%);
+    z-index: 50;
 }
 
-#language-select {
-    padding: 8px 12px;
-    font-size: 0.9rem;
+.language-btn {
     background: rgba(30, 41, 59, 0.8);
     border: 1px solid var(--border);
-    border-radius: 20px;
+    border-radius: 12px;
+    padding: 8px 12px;
+    font-size: 1.5rem;
     cursor: pointer;
-    width: auto;
-    appearance: none;
-    /* Remove default arrow in some browsers for cleaner look */
-    -webkit-appearance: none;
-    text-align: center;
+    transition: all 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 50px;
 }
 
-#language-select:hover {
+.language-btn:hover {
     border-color: var(--primary);
+    background: var(--card-bg);
+}
+
+.language-dropdown {
+    position: absolute;
+    top: 120%;
+    right: 0;
+    background: #0f172a;
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 5px;
+    list-style: none;
+    min-width: 160px;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    display: none;
+    backdrop-filter: blur(10px);
+}
+
+.language-dropdown.show {
+    display: block;
+    animation: fadeIn 0.2s ease;
+}
+
+.language-dropdown li {
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: background 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--text-main);
+    font-size: 0.95rem;
+}
+
+.language-dropdown li:hover {
+    background: rgba(255, 255, 255, 0.1);
 }
 
 .highlight {
