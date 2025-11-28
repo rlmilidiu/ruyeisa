@@ -28,21 +28,39 @@ exports.handler = async function (event, context) {
         const data = JSON.parse(event.body);
         const { amount, from, to } = data;
 
-        // Exchange rates (USD as base) - Updated November 2025
-        const rates = {
-            'USD': 1.0,
-            'EUR': 0.86,      // Updated: 0.86 EUR per USD
-            'GBP': 0.76,      // Updated: 0.76 GBP per USD (1/1.32)
-            'JPY': 156.00,    // Updated: 156 JPY per USD
-            'BRL': 5.36,      // Updated: 5.36 BRL per USD
-            'CAD': 1.40,      // Updated: 1.40 CAD per USD
-            'AUD': 1.53,      // Updated: 1.53 AUD per USD
-            'CHF': 0.88,      // Maintained
-            'CNY': 7.24,      // Maintained
-            'INR': 83.12      // Maintained
-        };
+        // Fetch live exchange rates from free API
+        const apiUrl = `https://open.er-api.com/v6/latest/${from}`;
 
-        if (!rates[from] || !rates[to]) {
+        let rates;
+        try {
+            const response = await fetch(apiUrl);
+            if (!response.ok) {
+                throw new Error('Failed to fetch exchange rates');
+            }
+            const ratesData = await response.json();
+            rates = ratesData.rates;
+        } catch (apiError) {
+            // Fallback to static rates if API fails
+            console.error('API error, using fallback rates:', apiError);
+            const fallbackRates = {
+                'USD': 1.0, 'EUR': 0.86, 'GBP': 0.76, 'JPY': 156.00,
+                'BRL': 5.36, 'CAD': 1.40, 'AUD': 1.53, 'CHF': 0.88,
+                'CNY': 7.24, 'INR': 83.12
+            };
+
+            // Convert fallback rates to be relative to 'from' currency
+            if (from === 'USD') {
+                rates = fallbackRates;
+            } else {
+                rates = {};
+                const fromRate = fallbackRates[from];
+                for (const [currency, rate] of Object.entries(fallbackRates)) {
+                    rates[currency] = rate / fromRate;
+                }
+            }
+        }
+
+        if (!rates[to]) {
             return {
                 statusCode: 400,
                 headers,
@@ -50,9 +68,9 @@ exports.handler = async function (event, context) {
             };
         }
 
-        // Convert to USD first, then to target currency
-        const amountInUSD = parseFloat(amount) / rates[from];
-        const convertedAmount = amountInUSD * rates[to];
+        // Convert amount using live rates
+        const convertedAmount = parseFloat(amount) * rates[to];
+        const rate = rates[to];
 
         return {
             statusCode: 200,
@@ -62,7 +80,8 @@ exports.handler = async function (event, context) {
                 from_currency: from,
                 to_currency: to,
                 converted_amount: parseFloat(convertedAmount.toFixed(2)),
-                rate: parseFloat((rates[to] / rates[from]).toFixed(6))
+                rate: parseFloat(rate.toFixed(6)),
+                live_rates: true
             })
         };
     } catch (error) {
