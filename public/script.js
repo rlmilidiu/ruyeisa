@@ -138,4 +138,40 @@ document.addEventListener('DOMContentLoaded', () => {
             resultDiv.innerHTML = `<span class="placeholder" style="color: #ef4444;">Error: ${error.message}</span>`;
         }
     });
+    // --- Present Value Calculator ---
+    document.getElementById('btn-pv').addEventListener('click', async () => {
+        const future_value = document.getElementById('pv-future-value').value;
+        const rate = document.getElementById('pv-rate').value;
+        const years = document.getElementById('pv-years').value;
+        const frequency = document.getElementById('pv-frequency').value;
+        const resultDiv = document.getElementById('result-pv');
+
+        if (!future_value || !rate || !years) {
+            resultDiv.innerHTML = '<span class="placeholder" style="color: #ef4444;">Please fill all fields</span>';
+            return;
+        }
+
+        resultDiv.innerHTML = '<span class="placeholder">Calculating...</span>';
+
+        try {
+            const response = await fetch('/.netlify/functions/present_value', {
+                method: 'POST',
+                body: JSON.stringify({ future_value, rate, years, frequency })
+            });
+
+            if (!response.ok) {
+                throw new Error(`Server error: ${response.status} ${response.statusText}`);
+            }
+
+            const data = await response.json();
+
+            resultDiv.innerHTML = `
+                <div class="result-value">${formatCurrency(data.present_value)}</div>
+                <div class="result-detail">To reach ${formatCurrency(data.future_value)} in ${data.years} years</div>
+                <div class="result-detail">Interest Needed: ${formatCurrency(data.interest_needed)}</div>
+            `;
+        } catch (error) {
+            resultDiv.innerHTML = `<span class="placeholder" style="color: #ef4444;">Error: ${error.message}</span>`;
+        }
+    });
 });

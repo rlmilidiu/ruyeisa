@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="style.css">
 </head>
+
 <body>
     <div class="background-blobs">
         <div class="blob blob-1"></div>
@@ -26,6 +28,7 @@
             <button class="tab-btn active" data-target="currency">Currency</button>
             <button class="tab-btn" data-target="loan">Loan</button>
             <button class="tab-btn" data-target="interest">Interest</button>
+            <button class="tab-btn" data-target="present-value">Present Value</button>
         </nav>
 
         <main>
@@ -131,8 +134,42 @@
                     <span class="placeholder">Result will appear here</span>
                 </div>
             </section>
+
+            <!-- Present Value Calculator -->
+            <section id="present-value" class="calculator">
+                <h2>Present Value Calculator</h2>
+                <div class="form-group">
+                    <label for="pv-future-value">Future Value (Target)</label>
+                    <input type="number" id="pv-future-value" placeholder="e.g. 100000">
+                </div>
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="pv-rate">Annual Rate (%)</label>
+                        <input type="number" id="pv-rate" placeholder="e.g. 7" step="0.1">
+                    </div>
+                    <div class="form-group">
+                        <label for="pv-years">Time (Years)</label>
+                        <input type="number" id="pv-years" placeholder="e.g. 10">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="pv-frequency">Compounding Frequency</label>
+                    <select id="pv-frequency">
+                        <option value="annually">Annually</option>
+                        <option value="semi-annually">Semi-Annually</option>
+                        <option value="quarterly">Quarterly</option>
+                        <option value="monthly">Monthly</option>
+                        <option value="daily">Daily</option>
+                    </select>
+                </div>
+                <button id="btn-pv" class="btn-primary">Calculate Present Value</button>
+                <div class="result" id="result-pv">
+                    <span class="placeholder">Result will appear here</span>
+                </div>
+            </section>
         </main>
     </div>
     <script src="script.js"></script>
 </body>
+
 </html>
