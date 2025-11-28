@@ -20,28 +20,41 @@
 
     <div class="container">
         <header>
-            <h1>FinCalc <span class="highlight">Pro</span></h1>
-            <p>Your personal financial assistant</p>
+            <div class="header-top">
+                <h1>FinCalc <span class="highlight">Pro</span></h1>
+                <div class="language-selector">
+                    <select id="language-select">
+                        <option value="en">🇺🇸 English</option>
+                        <option value="pt">🇧🇷 Português</option>
+                        <option value="es">🇪🇸 Español</option>
+                        <option value="fr">🇫🇷 Français</option>
+                        <option value="de">🇩🇪 Deutsch</option>
+                        <option value="zh">🇨🇳 中文</option>
+                        <option value="ar">🇸🇦 العربية</option>
+                    </select>
+                </div>
+            </div>
+            <p data-i18n="subtitle">Your personal financial assistant</p>
         </header>
 
         <nav class="tabs">
-            <button class="tab-btn active" data-target="currency">Currency</button>
-            <button class="tab-btn" data-target="loan">Loan</button>
-            <button class="tab-btn" data-target="interest">Interest</button>
-            <button class="tab-btn" data-target="present-value">Present Value</button>
+            <button class="tab-btn active" data-target="currency" data-i18n="tab_currency">Currency</button>
+            <button class="tab-btn" data-target="loan" data-i18n="tab_loan">Loan</button>
+            <button class="tab-btn" data-target="interest" data-i18n="tab_interest">Interest</button>
+            <button class="tab-btn" data-target="present-value" data-i18n="tab_pv">Present Value</button>
         </nav>
 
         <main>
             <!-- Currency Converter -->
             <section id="currency" class="calculator active">
-                <h2>Currency Converter</h2>
+                <h2 data-i18n="currency_title">Currency Converter</h2>
                 <div class="form-group">
-                    <label for="currency-amount">Amount</label>
+                    <label for="currency-amount" data-i18n="label_amount">Amount</label>
                     <input type="number" id="currency-amount" placeholder="1000" value="1">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="currency-from">From</label>
+                        <label for="currency-from" data-i18n="label_from">From</label>
                         <select id="currency-from">
                             <option value="USD" selected>USD</option>
                             <option value="EUR">EUR</option>
@@ -54,7 +67,7 @@
                     </div>
                     <div class="swap-icon">⇄</div>
                     <div class="form-group">
-                        <label for="currency-to">To</label>
+                        <label for="currency-to" data-i18n="label_to">To</label>
                         <select id="currency-to">
                             <option value="EUR" selected>EUR</option>
                             <option value="USD">USD</option>
@@ -66,105 +79,106 @@
                         </select>
                     </div>
                 </div>
-                <button id="btn-currency" class="btn-primary">Convert</button>
+                <button id="btn-currency" class="btn-primary" data-i18n="btn_convert">Convert</button>
                 <div class="result" id="result-currency">
-                    <span class="placeholder">Result will appear here</span>
+                    <span class="placeholder" data-i18n="result_placeholder">Result will appear here</span>
                 </div>
             </section>
 
             <!-- Loan Calculator -->
             <section id="loan" class="calculator">
-                <h2>Loan Calculator</h2>
+                <h2 data-i18n="loan_title">Loan Calculator</h2>
                 <div class="form-group">
-                    <label for="loan-principal">Principal Amount</label>
+                    <label for="loan-principal" data-i18n="label_principal">Principal Amount</label>
                     <input type="number" id="loan-principal" placeholder="e.g. 200000">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="loan-rate">Annual Rate (%)</label>
+                        <label for="loan-rate" data-i18n="label_rate">Annual Rate (%)</label>
                         <input type="number" id="loan-rate" placeholder="e.g. 5.5" step="0.1">
                     </div>
                     <div class="form-group">
-                        <label for="loan-years">Term (Years)</label>
+                        <label for="loan-years" data-i18n="label_years">Term (Years)</label>
                         <input type="number" id="loan-years" placeholder="e.g. 30">
                     </div>
                 </div>
-                <button id="btn-loan" class="btn-primary">Calculate Loan</button>
+                <button id="btn-loan" class="btn-primary" data-i18n="btn_calculate_loan">Calculate Loan</button>
                 <div class="result" id="result-loan">
-                    <span class="placeholder">Result will appear here</span>
+                    <span class="placeholder" data-i18n="result_placeholder">Result will appear here</span>
                 </div>
             </section>
 
             <!-- Interest Calculator -->
             <section id="interest" class="calculator">
-                <h2>Interest Calculator</h2>
+                <h2 data-i18n="interest_title">Interest Calculator</h2>
                 <div class="form-group">
-                    <label for="interest-principal">Principal Amount</label>
+                    <label for="interest-principal" data-i18n="label_principal">Principal Amount</label>
                     <input type="number" id="interest-principal" placeholder="e.g. 10000">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="interest-rate">Annual Rate (%)</label>
+                        <label for="interest-rate" data-i18n="label_rate">Annual Rate (%)</label>
                         <input type="number" id="interest-rate" placeholder="e.g. 4" step="0.1">
                     </div>
                     <div class="form-group">
-                        <label for="interest-time">Time (Years)</label>
+                        <label for="interest-time" data-i18n="label_time">Time (Years)</label>
                         <input type="number" id="interest-time" placeholder="e.g. 10">
                     </div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="interest-type">Type</label>
+                        <label for="interest-type" data-i18n="label_type">Type</label>
                         <select id="interest-type">
-                            <option value="simple">Simple Interest</option>
-                            <option value="compound">Compound Interest</option>
+                            <option value="simple" data-i18n="option_simple">Simple Interest</option>
+                            <option value="compound" data-i18n="option_compound">Compound Interest</option>
                         </select>
                     </div>
                     <div class="form-group" id="frequency-group" style="display: none;">
-                        <label for="interest-frequency">Frequency</label>
+                        <label for="interest-frequency" data-i18n="label_frequency">Frequency</label>
                         <select id="interest-frequency">
-                            <option value="1">Annually</option>
-                            <option value="12">Monthly</option>
-                            <option value="4">Quarterly</option>
+                            <option value="1" data-i18n="freq_annually">Annually</option>
+                            <option value="12" data-i18n="freq_monthly">Monthly</option>
+                            <option value="4" data-i18n="freq_quarterly">Quarterly</option>
                         </select>
                     </div>
                 </div>
-                <button id="btn-interest" class="btn-primary">Calculate Interest</button>
+                <button id="btn-interest" class="btn-primary" data-i18n="btn_calculate_interest">Calculate
+                    Interest</button>
                 <div class="result" id="result-interest">
-                    <span class="placeholder">Result will appear here</span>
+                    <span class="placeholder" data-i18n="result_placeholder">Result will appear here</span>
                 </div>
             </section>
 
             <!-- Present Value Calculator -->
             <section id="present-value" class="calculator">
-                <h2>Present Value Calculator</h2>
+                <h2 data-i18n="pv_title">Present Value Calculator</h2>
                 <div class="form-group">
-                    <label for="pv-future-value">Future Value (Target)</label>
+                    <label for="pv-future-value" data-i18n="label_future_value">Future Value (Target)</label>
                     <input type="number" id="pv-future-value" placeholder="e.g. 100000">
                 </div>
                 <div class="form-row">
                     <div class="form-group">
-                        <label for="pv-rate">Annual Rate (%)</label>
+                        <label for="pv-rate" data-i18n="label_rate">Annual Rate (%)</label>
                         <input type="number" id="pv-rate" placeholder="e.g. 7" step="0.1">
                     </div>
                     <div class="form-group">
-                        <label for="pv-years">Time (Years)</label>
+                        <label for="pv-years" data-i18n="label_time">Time (Years)</label>
                         <input type="number" id="pv-years" placeholder="e.g. 10">
                     </div>
                 </div>
                 <div class="form-group">
-                    <label for="pv-frequency">Compounding Frequency</label>
+                    <label for="pv-frequency" data-i18n="label_frequency">Compounding Frequency</label>
                     <select id="pv-frequency">
-                        <option value="annually">Annually</option>
-                        <option value="semi-annually">Semi-Annually</option>
-                        <option value="quarterly">Quarterly</option>
-                        <option value="monthly">Monthly</option>
-                        <option value="daily">Daily</option>
+                        <option value="annually" data-i18n="freq_annually">Annually</option>
+                        <option value="semi-annually" data-i18n="freq_semi_annually">Semi-Annually</option>
+                        <option value="quarterly" data-i18n="freq_quarterly">Quarterly</option>
+                        <option value="monthly" data-i18n="freq_monthly">Monthly</option>
+                        <option value="daily" data-i18n="freq_daily">Daily</option>
                     </select>
                 </div>
-                <button id="btn-pv" class="btn-primary">Calculate Present Value</button>
+                <button id="btn-pv" class="btn-primary" data-i18n="btn_calculate_pv">Calculate Present Value</button>
                 <div class="result" id="result-pv">
-                    <span class="placeholder">Result will appear here</span>
+                    <span class="placeholder" data-i18n="result_placeholder">Result will appear here</span>
                 </div>
             </section>
         </main>

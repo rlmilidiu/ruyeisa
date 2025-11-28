@@ -73,14 +73,27 @@ body {
 }
 
 @keyframes float {
-    0% { transform: translate(0, 0); }
-    100% { transform: translate(30px, 50px); }
+    0% {
+        transform: translate(0, 0);
+    }
+
+    100% {
+        transform: translate(30px, 50px);
+    }
 }
 
 @keyframes pulse {
-    0% { transform: translate(-50%, -50%) scale(1); }
-    50% { transform: translate(-50%, -50%) scale(1.2); }
-    100% { transform: translate(-50%, -50%) scale(1); }
+    0% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.2);
+    }
+
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
 }
 
 .container {
@@ -91,14 +104,46 @@ body {
 }
 
 header {
-    text-align: center;
     margin-bottom: 30px;
+}
+
+.header-top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    margin-bottom: 5px;
 }
 
 header h1 {
     font-size: 2.5rem;
     font-weight: 700;
-    margin-bottom: 5px;
+    margin: 0;
+}
+
+.language-selector {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#language-select {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+    background: rgba(30, 41, 59, 0.8);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    cursor: pointer;
+    width: auto;
+    appearance: none;
+    /* Remove default arrow in some browsers for cleaner look */
+    -webkit-appearance: none;
+    text-align: center;
+}
+
+#language-select:hover {
+    border-color: var(--primary);
 }
 
 .highlight {
@@ -108,6 +153,19 @@ header h1 {
 
 header p {
     color: var(--text-muted);
+    text-align: center;
+}
+
+@media (max-width: 600px) {
+    .header-top {
+        flex-direction: column;
+        gap: 15px;
+    }
+
+    .language-selector {
+        position: static;
+        transform: none;
+    }
 }
 
 .tabs {
@@ -153,8 +211,15 @@ header p {
 }
 
 @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(10px); }
-    to { opacity: 1; transform: translateY(0); }
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 h2 {
@@ -182,7 +247,8 @@ label {
     font-size: 0.9rem;
 }
 
-input, select {
+input,
+select {
     width: 100%;
     padding: 12px;
     background: rgba(15, 23, 42, 0.6);
@@ -193,7 +259,8 @@ input, select {
     transition: border-color 0.3s;
 }
 
-input:focus, select:focus {
+input:focus,
+select:focus {
     outline: none;
     border-color: var(--primary);
 }
