@@ -26,29 +26,29 @@ exports.handler = async function (event, context) {
 
     try {
         const data = JSON.parse(event.body);
-        const { principal, annual_rate, years } = data;
+        const { principal, rate, years } = data;
 
-        const monthlyRate = annual_rate / 100 / 12;
-        const numPayments = years * 12;
+        const monthlyRate = parseFloat(rate) / 100 / 12;
+        const numPayments = parseFloat(years) * 12;
 
         let monthlyPayment;
         if (monthlyRate === 0) {
-            monthlyPayment = principal / numPayments;
+            monthlyPayment = parseFloat(principal) / numPayments;
         } else {
-            monthlyPayment = principal * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
+            monthlyPayment = parseFloat(principal) * (monthlyRate * Math.pow(1 + monthlyRate, numPayments)) /
                 (Math.pow(1 + monthlyRate, numPayments) - 1);
         }
 
         const totalPayment = monthlyPayment * numPayments;
-        const totalInterest = totalPayment - principal;
+        const totalInterest = totalPayment - parseFloat(principal);
 
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
-                principal: principal,
-                annual_rate: annual_rate,
-                years: years,
+                principal: parseFloat(principal),
+                annual_rate: parseFloat(rate),
+                years: parseFloat(years),
                 monthly_payment: parseFloat(monthlyPayment.toFixed(2)),
                 total_payment: parseFloat(totalPayment.toFixed(2)),
                 total_interest: parseFloat(totalInterest.toFixed(2))
@@ -58,7 +58,7 @@ exports.handler = async function (event, context) {
         return {
             statusCode: 400,
             headers,
-            body: JSON.stringify({ error: 'Invalid request data' })
+            body: JSON.stringify({ error: 'Invalid request data', details: error.message })
         };
     }
 };

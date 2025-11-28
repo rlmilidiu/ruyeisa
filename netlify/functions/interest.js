@@ -26,20 +26,40 @@ exports.handler = async function (event, context) {
 
     try {
         const data = JSON.parse(event.body);
-        const { principal, rate, time } = data;
+        const { principal, rate, time, type, frequency } = data;
 
-        // Calculate simple interest: I = P * R * T / 100
-        const interest = (principal * rate * time) / 100;
-        const totalAmount = principal + interest;
+        const p = parseFloat(principal);
+        const r = parseFloat(rate);
+        const t = parseFloat(time);
+
+        let interest, totalAmount;
+
+        if (type === 'compound') {
+            // Compound interest: A = P(1 + r/n)^(nt)
+            const frequencyMap = {
+                'annually': 1,
+                'semi-annually': 2,
+                'quarterly': 4,
+                'monthly': 12,
+                'daily': 365
+            };
+            const n = frequencyMap[frequency] || 1;
+            totalAmount = p * Math.pow(1 + (r / 100) / n, n * t);
+            interest = totalAmount - p;
+        } else {
+            // Simple interest: I = P * R * T / 100
+            interest = (p * r * t) / 100;
+            totalAmount = p + interest;
+        }
 
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
-                principal: principal,
-                rate: rate,
-                time: time,
-                interest: parseFloat(interest.toFixed(2)),
+                principal: p,
+                rate: r,
+                time: t,
+                interest_earned: parseFloat(interest.toFixed(2)),
                 total_amount: parseFloat(totalAmount.toFixed(2))
             })
         };
@@ -47,7 +67,7 @@ exports.handler = async function (event, context) {
         return {
             statusCode: 400,
             headers,
-            body: JSON.stringify({ error: 'Invalid request data' })
+            body: JSON.stringify({ error: 'Invalid request data', details: error.message })
         };
     }
 };

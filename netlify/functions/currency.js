@@ -26,7 +26,7 @@ exports.handler = async function (event, context) {
 
     try {
         const data = JSON.parse(event.body);
-        const { amount, from_currency, to_currency } = data;
+        const { amount, from, to } = data;
 
         // Exchange rates (USD as base)
         const rates = {
@@ -42,7 +42,7 @@ exports.handler = async function (event, context) {
             'INR': 83.12
         };
 
-        if (!rates[from_currency] || !rates[to_currency]) {
+        if (!rates[from] || !rates[to]) {
             return {
                 statusCode: 400,
                 headers,
@@ -51,25 +51,25 @@ exports.handler = async function (event, context) {
         }
 
         // Convert to USD first, then to target currency
-        const amountInUSD = amount / rates[from_currency];
-        const convertedAmount = amountInUSD * rates[to_currency];
+        const amountInUSD = parseFloat(amount) / rates[from];
+        const convertedAmount = amountInUSD * rates[to];
 
         return {
             statusCode: 200,
             headers,
             body: JSON.stringify({
-                amount: amount,
-                from_currency: from_currency,
-                to_currency: to_currency,
+                amount: parseFloat(amount),
+                from_currency: from,
+                to_currency: to,
                 converted_amount: parseFloat(convertedAmount.toFixed(2)),
-                rate: parseFloat((rates[to_currency] / rates[from_currency]).toFixed(6))
+                rate: parseFloat((rates[to] / rates[from]).toFixed(6))
             })
         };
     } catch (error) {
         return {
             statusCode: 400,
             headers,
-            body: JSON.stringify({ error: 'Invalid request data' })
+            body: JSON.stringify({ error: 'Invalid request data', details: error.message })
         };
     }
 };
