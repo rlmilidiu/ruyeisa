@@ -28,18 +28,18 @@ exports.handler = async function (event, context) {
         const data = JSON.parse(event.body);
         const { amount, from, to } = data;
 
-        // Exchange rates (USD as base)
+        // Exchange rates (USD as base) - Updated November 2025
         const rates = {
             'USD': 1.0,
-            'EUR': 0.92,
-            'GBP': 0.79,
-            'JPY': 149.50,
-            'BRL': 4.97,
-            'CAD': 1.36,
-            'AUD': 1.52,
-            'CHF': 0.88,
-            'CNY': 7.24,
-            'INR': 83.12
+            'EUR': 0.86,      // Updated: 0.86 EUR per USD
+            'GBP': 0.76,      // Updated: 0.76 GBP per USD (1/1.32)
+            'JPY': 156.00,    // Updated: 156 JPY per USD
+            'BRL': 5.36,      // Updated: 5.36 BRL per USD
+            'CAD': 1.40,      // Updated: 1.40 CAD per USD
+            'AUD': 1.53,      // Updated: 1.53 AUD per USD
+            'CHF': 0.88,      // Maintained
+            'CNY': 7.24,      // Maintained
+            'INR': 83.12      // Maintained
         };
 
         if (!rates[from] || !rates[to]) {
